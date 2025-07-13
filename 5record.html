@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>감정 선택 및 확인</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background-color: #f6f4ed;
+      font-family: 'SUIT', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #9aaa97;
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+    }
+
+    .emotion-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .emotion-btn {
+      background-color: #6f8c6c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .emotion-btn:hover {
+      background-color: #5c755b;
+    }
+
+    .emotion-btn.selected {
+      background-color: #473526;
+    }
+
+    .main-btn {
+      margin-top: 24px;
+      background-color: #85744e;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .emotion-icon {
+      width: 80px;
+      height: 80px;
+      margin: 16px auto;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .yes-btn { background: #85744e; color: white; }
+    .no-btn { background: #2e2e2e; color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- Step 1: 감정 선택 -->
+  <div id="step1" class="container">
+    <h2>오늘의 감정 기록</h2>
+    <p>오늘 하루, 어떤 감정을 느끼셨나요? 선택해 주세요.</p>
+    <div class="emotion-grid" id="emotionGrid">
+      <button class="emotion-btn" data-emotion="행복" data-icon="img/h.png">행복</button>
+      <button class="emotion-btn" data-emotion="슬픔" data-icon="img/sa.png">슬픔</button>
+      <button class="emotion-btn" data-emotion="화남" data-icon="img/an.png">화남</button>
+      <button class="emotion-btn" data-emotion="우울" data-icon="img/tr.png">우울</button>
+      <button class="emotion-btn" data-emotion="놀람" data-icon="img/am.png">놀람</button>
+      <button class="emotion-btn" data-emotion="평온" data-icon="img/y.png">평온</button>
+      <button class="emotion-btn" data-emotion="걱정" data-icon="img/dis.png">걱정</button>
+      <button class="emotion-btn" data-emotion="설렘" data-icon="img/s.png">설렘</button>
+      <button class="emotion-btn" data-emotion="피곤" data-icon="img/n.png">피곤</button>
+    </div>
+    <button id="selectBtn" class="main-btn" disabled>선택</button>
+  </div>
+
+  <!-- Step 2: 감정 확인 -->
+  <div id="step2" class="container hidden">
+    <h2>오늘의 감정 기록</h2>
+    <img id="confirmIcon" class="emotion-icon" src="" alt="감정" />
+    <p id="confirmText">오늘의 감정을 OO으로 할까요?</p>
+    <div class="btn-group">
+      <button class="btn yes-btn" onclick="goToDiary()">네</button>
+      <button class="btn no-btn" onclick="backToSelect()">아니요</button>
+    </div>
+  </div>
+
+  <script>
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const selectBtn = document.getElementById('selectBtn');
+    const emotionBtns = document.querySelectorAll('.emotion-btn');
+    let selectedEmotion = null;
+    let selectedIcon = null;
+
+    emotionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        emotionBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedEmotion = btn.dataset.emotion;
+        selectedIcon = btn.dataset.icon;
+        selectBtn.disabled = false;
+      });
+    });
+
+    selectBtn.addEventListener('click', () => {
+      document.getElementById('confirmIcon').src = selectedIcon;
+      document.getElementById('confirmText').innerText = `오늘의 감정을 ${selectedEmotion}으로 할까요?`;
+      step1.classList.add('hidden');
+      step2.classList.remove('hidden');
+    });
+
+    function backToSelect() {
+      step2.classList.add('hidden');
+      step1.classList.remove('hidden');
+    }
+
+    function goToDiary() {
+      localStorage.setItem("confirmedEmotion", selectedEmotion);
+      localStorage.setItem("confirmedIcon", selectedIcon);
+      window.location.href = "6write.html";
+    }
+  </script>
+</body>
+</html>

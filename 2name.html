@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>FINTIEM</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/suitcss-font@1.0.0/suit.min.css" rel="stylesheet">
+    <link rel="icon" href="img/vl.png" type="image/png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #f6f8f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'SUIT', sans-serif;
+        }
+
+        #name_div {
+            border-radius: 25px;
+            background: #A3BFA3;
+            width: 700px;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        #name_div p {
+            color: #2f2f2f;
+            font-size: 42px;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: 520px;
+            height: 70px;
+            border: none;
+            border-radius: 30px;
+            padding: 0 20px;
+            font-size: 20px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        a {
+            display: flex;                 
+            align-items: center;          
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            width: 290px;
+            height: 63px;
+            border: none;
+            border-radius: 50px;
+            font-size: 28px;
+            background-color: #6B8F71;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        a:hover {
+            background-color: #58785c;
+        }
+    </style>
+</head>
+<body>
+    <div id="name_div">
+        <div class="name_text">
+            <p>이름을 입력해주세요.</p>
+        </div>
+        <input type="text" placeholder="예: 박하린" id="usernameInput">
+        <a href="3intro.html" onclick="saveUsername()">확인</a>
+    </div>
+    <script>
+    function saveUsername(event) {
+        const name = document.getElementById("usernameInput").value.trim();
+        if (!name) {
+            alert("이름을 입력해주세요!");
+            return;
+        }
+
+        localStorage.setItem("currentUser", name);
+
+    }
+
+    </script>
+</body>
+</html>

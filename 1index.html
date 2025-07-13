@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>FINTIEM</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/suitcss-font@1.0.0/suit.min.css" rel="stylesheet">
+    <link rel="icon" href="img/vl.png" type="image/png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #f6f8f6;
+            font-family: 'SUIT', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .char-div img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 40px;
+        }
+
+        .text-div h2 {
+            font-size: 42px;
+            color: #2f2f2f;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .text-div p {
+            font-size: 20px;
+            color: #555;
+            font-weight: 300;
+        }
+
+        .start-div {
+            margin-top: 50px;
+        }
+
+        .start-div a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 14px 32px;
+            font-size: 18px;
+            background-color: #8A784E;
+            color: white;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-div a:hover {
+            background-color: #473526;
+        }
+    </style>
+</head>
+<body>
+    <div class="char-div">
+        <img src="img/vl.png" alt="캐릭터">
+    </div>
+    <div class="text-div">
+        <h2>안녕하세요</h2>
+        <p>오늘의 감정들을 기록해볼까요?</p>
+    </div>
+    <div class="start-div">
+        <a href="2name.html">시작하기</a>
+    </div>
+</body>
+</html>

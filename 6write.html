@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>일기 작성</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+        background-color: #f6f4ed;
+        font-family: 'SUIT', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .container {
+        background-color: #9aaa97;
+        border-radius: 20px;
+        padding: 40px 30px;
+        width: 100%;
+        max-width: 700px;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .emotion-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+
+    .emotion-label {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    textarea {
+        width: 650px;
+        height: 250px;
+        border: none;
+        border-radius: 12px;
+        padding: 16px;
+        font-size: 1rem;
+        resize: none;
+        font-family: 'SUIT', sans-serif;
+        margin-bottom: 10px;
+        background-color: #fefefe;
+        color: #333;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .submit-btn {
+        background-color: #85744e;
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .submit-btn:hover {
+        background-color: #6e603f;
+    }
+
+    .message-1 {
+        font-size: 30px;
+        color: white;
+        margin-top: 24px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container" id="writeStep">
+    <textarea id="diaryInput" placeholder="오늘 있었던 일을 자유롭게 적어보세요"></textarea>
+    <br />
+    <button class="submit-btn" onclick="saveDiary()">작성 완료</button>
+  </div>
+
+  <div class="container hidden" id="doneStep">
+    <h2 class="message-1">마무리 일기</h2>
+    <p style="color: #f0f0f0;">오늘의 일기를 마무리할까요?</p>
+    <p id="message" style="
+        margin-top: 30px;
+        font-size: 18px;
+        min-height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.4;
+        color: white;
+    "></p>
+    <button class="submit-btn" onclick="goHome()">메인으로</button>
+  </div>
+
+  <script>
+    const message = [
+      "오늘도 기록해줘서 고마워요 💛",
+      "하루하루 쌓인 기록이 당신을 지켜줄 거예요.",
+      "지금 이 순간도 충분히 잘하고 있어요 🌱",
+      "무슨 일이 있었든, 오늘을 살아낸 당신은 멋져요.",
+      "감정을 남긴다는 건 용기 있는 행동이에요.",
+      "마음이 조금 가벼워졌기를 바라요 ☁️",
+      "잘했어요. 정말로요."
+    ];
+    const randomIndex = Math.floor(Math.random() * message.length);
+    const messageBos = document.getElementById("message");
+    messageBos.textContent = message[randomIndex];
+
+    const emotion = localStorage.getItem("confirmedEmotion") || "감정 없음";
+    const icon = localStorage.getItem("confirmedIcon") || "img/default.png";
+    const currentUser = localStorage.getItem("currentUser") || "guest";
+    const userKey = `diary_${currentUser}`;
+
+    document.getElementById("emotionText").innerText = `${emotion}한 하루`;
+    document.getElementById("emotionIcon").src = icon;
+
+    function saveDiary() {
+      const text = document.getElementById("diaryInput").value.trim();
+      if (!text) {
+        alert("일기를 입력해주세요!");
+        return;
+      }
+
+      const today = new Date();
+      const date = today.toLocaleDateString('ko-KR', {
+        year: 'numeric', month: '2-digit', day: '2-digit'
+      });
+
+      const newEntry = {
+        emotion: emotion,
+        icon: icon,
+        text: text,
+        date: date
+      };
+
+      const existing = JSON.parse(localStorage.getItem(userKey)) || [];
+      existing.push(newEntry);
+      localStorage.setItem(userKey, JSON.stringify(existing));
+
+      localStorage.removeItem("confirmedEmotion");
+      localStorage.removeItem("confirmedIcon");
+
+      document.getElementById("writeStep").classList.add("hidden");
+      document.getElementById("doneStep").classList.remove("hidden");
+    }
+
+    function goHome() {
+      window.location.href = "4mian.html";
+    }
+  </script>
+</body>
+</html>

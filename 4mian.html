@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <title>FINTIEM - 감정 일기</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            body {
+            background-color: #f6f4ed;
+            font-family: 'SUIT', sans-serif;
+            padding: 40px;
+            margin: 0 150px;
+            }
+
+            h2 {
+            margin-bottom: 24px;
+            }
+
+            .write-button {
+            background-color: #9aaa97;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 30px;
+            }
+
+            .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            }
+
+            .diary-card {
+            width: 300px;
+            height: 250px;
+            background-color: #857c6c;
+            border-radius: 20px;
+            padding: 16px;
+            color: white;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            }
+
+            .diary-card img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            }
+
+            .diary-card strong {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            }
+
+            .diary-card .content {
+            font-size: 0.9rem;
+            max-height: 100px;
+            overflow-y: auto;
+            padding: 0 4px;
+            line-height: 1.4;
+            }
+        </style>
+        </head>
+        <body>
+        <h2 id="greeting"></h2>
+        <button class="write-button" onclick="location.href='5record.html'">일기 쓰기</button>
+
+        <!-- ✅ 일기 카드 출력 위치 -->
+        <div class="card-grid" id="cardGrid"></div>
+
+        <script>
+            const currentUser = localStorage.getItem("currentUser") || "guest";
+            const userKey = `diary_${currentUser}`;
+            document.getElementById("greeting").innerText = `${currentUser}님의 일기`;
+
+            const diaries = JSON.parse(localStorage.getItem(userKey)) || [];
+            const cardGrid = document.getElementById("cardGrid");
+
+            if (diaries.length === 0) {
+            cardGrid.innerHTML = "<p>작성된 일기가 없습니다.</p>";
+            } else {
+            diaries.reverse().forEach(entry => {
+                const div = document.createElement("div");
+                div.className = "diary-card";
+                div.innerHTML = `
+                <img src="${entry.icon}" alt="emotion icon" />
+                <strong>${entry.date}</strong>
+                <div class="content">${entry.text}</div>
+                `;
+                cardGrid.appendChild(div);
+            });
+            }
+        </script>
+    </body>
+</html>
